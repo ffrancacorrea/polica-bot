@@ -20,25 +20,27 @@ function add_member(member){
 
 //change to mapreduce
 function countShots(member){
-  // var item = data.items.filter(i => i.name == member);
-  // if(item.length == 0){
-  //   var new_member = add_member(member);
-  //   data.items.push(new_member);
-  //   console.log(data);
-  // };
-//console.log(item);
-  // var shots = item[0].shots++;
+  var item = data.items.filter(i => i.name == member);
+  if(item.length == 0){
+    var new_member = add_member(member);
+    data.items.push(new_member);
+    item = data.items.filter(i => i.name == member);
+    //console.log(data);
+  };
 
-    // fs.writeFile("data.json", JSON.stringify(data), function(err) {
-    //   console.log('shots were added');
-    //     if (err) throw err;
-    //   };
-    // );    //
+  console.log(item);
+  var shots = item[0].shots++;
+console.log(data);
+    fs.writeFile("data.json", JSON.stringify(data), function(err) {
+      console.log('shots were added');
+        if (err) throw err;
+      }
+    );
 };
 
 client.once('ready', () => {
   console.log('Parado!');
-  console.log(data);
+  //console.log(data);
 });
 
 client.on("message", message => {
