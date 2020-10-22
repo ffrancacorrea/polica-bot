@@ -33,7 +33,7 @@ function countShots(member){
     //   console.log('shots were added');
     //     if (err) throw err;
     //   };
-    // );
+    // );    //
 };
 
 client.once('ready', () => {
