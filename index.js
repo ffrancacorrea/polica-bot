@@ -4,8 +4,16 @@ const client = new Discord.Client();
 const fs = require('fs');
 
 //VERIFY IF FILE EXISTS
-let rawdata = fs.readFileSync('data.json');
-let data = JSON.parse(rawdata);
+
+if(fs.existsSync('data.json')) {
+  var rawdata = fs.readFileSync('data.json');
+  var data = JSON.parse(rawdata);
+} else {
+    fs.writeFile('data.json', JSON.stringify({items: []}), (err) => {
+        if (err) console.log(err);
+        console.log('Successfully created')
+    })
+}
 
 //VARIABLES
 const client_id = process.env.POLICA_BOT_USER_ID;
@@ -14,31 +22,28 @@ const prefix = "-";
 
 function add_member(member){
   obj = {"name":member, "shots":0}
-  //console.log(obj);
   return obj;
 };
 
-//change to mapreduce
 function countShots(member){
-  // var item = data.items.filter(i => i.name == member);
-  // if(item.length == 0){
-  //   var new_member = add_member(member);
-  //   data.items.push(new_member);
-  //   console.log(data);
-  // };
-//console.log(item);
-  // var shots = item[0].shots++;
+  var item = data.items.filter(i => i.name == member);
+  if(item.length == 0){
+    var new_member = add_member(member);
+    data.items.push(new_member);
+    item = data.items.filter(i => i.name == member);
+  };
 
-    // fs.writeFile("data.json", JSON.stringify(data), function(err) {
-    //   console.log('shots were added');
-    //     if (err) throw err;
-    //   };
-    // );    //
+  var shots = item[0].shots++;
+  console.log(data);
+    fs.writeFile("data.json", JSON.stringify(data), function(err) {
+      console.log('shots were added');
+        if (err) throw err;
+      }
+    );
 };
 
 client.once('ready', () => {
   console.log('Parado!');
-  console.log(data);
 });
 
 client.on("message", message => {
@@ -49,14 +54,12 @@ client.on("message", message => {
   const member = message.mentions.members.first();
 
 if (command === "shot" && member){
-    message.channel.send("Parado " + member.displayName + "!")
+    message.channel.send("Parado " + member.user.username + "!")
+    console.log(member)
 
-    countShots(member.displayName); //else criar arquivo
+    countShots(member.user.username); //else criar arquivo
 
   }
 });
 
 client.login(token);
-
-
-//save counter as json
