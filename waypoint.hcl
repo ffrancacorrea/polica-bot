@@ -12,7 +12,7 @@ app "bot-polica" {
     registry {
       use "docker" {
         image = "polica-bot"
-        tag = "1"
+        tag = "alpine"
         local = true
       }
     }

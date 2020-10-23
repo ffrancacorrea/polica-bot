@@ -1,4 +1,4 @@
-FROM node:lts
+FROM node:alpine
 WORKDIR /bot 
 COPY . .
 RUN npm install
