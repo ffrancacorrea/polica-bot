@@ -22,7 +22,9 @@ jobs:
       - name: install waypoint
         run: unzip -d /usr/local/bin /tmp/waypoint.zip
       - name: waypoint bootstrap  
-        run: waypoint install --platform=docker -accept-tos
+        run: |
+          docker pull hashicorp/waypoint:latest
+          waypoint install --platform=docker -accept-tos
       - name: waypoint initialize
         run: waypoint init
       - name: waypoint build
