@@ -4,6 +4,7 @@
 
 ### Node ###
 # Logs
+.waypoint
 logs
 *.log
 npm-debug.log*
