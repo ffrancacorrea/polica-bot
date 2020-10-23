@@ -8,9 +8,22 @@ jobs:
   build:
     runs-on: ubuntu-latest
     container: docker:latest
+    services:
+      docker-dind:
+        image: docker:dind
     steps:
       - uses: actions/checkout@v2
       - name: Run Sanity check
-        run: echo polica!
-      - name: Docker version
-        run: docker version
+        run: |
+          echo polica!
+          docker version
+      - name: download waypoint
+        run: wget -q -O /tmp/waypoint.zip https://releases.hashicorp.com/waypoint/0.1.3/waypoint_0.1.3_linux_amd64.zip
+      - name: install waypoint
+        run: unzip -d /usr/local/bin /tmp/waypoint.zip
+      - name: waypoint bootstrap  
+        run: waypoint install --platform=docker -accept-tos
+      - name: waypoint initialize
+        run: waypoint init
+      - name: waypoint build
+        run: waypoint build
