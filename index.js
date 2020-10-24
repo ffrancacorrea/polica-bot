@@ -2,7 +2,6 @@
 const Discord = require("discord.js");
 const client = new Discord.Client();
 const fs = require('fs');
-//bot token
 const token = process.env.POLICA_BOT_TOKEN;
 const prefix = "!";
 
@@ -19,9 +18,9 @@ if(fs.existsSync('data.json')) {
 function add_member(member){
   obj = {"name":member, "shots":0}
   return obj;
-};
+}
 
-function countShots(member){
+function countShots(member, command){
   var item = data.items.filter(i => i.name == member);
   //adds member to json in case it does not exist
   if(item.length == 0){
@@ -29,14 +28,17 @@ function countShots(member){
     data.items.push(new_member);
     item = data.items.filter(i => i.name == member);
   };
-  var shots = item[0].shots++;
+  var shots;
+  if(command == "shot"){
+    shots = item[0].shots++
+  } else shots = item[0].shots--;
+
   //write new data to file
   fs.writeFile("data.json", JSON.stringify(data), function(err) {
-      console.log('shots were added');
         if (err) throw err;
       }
     );
-};
+}
 
 function get_tshot(n_shot){
   if (n_shot > 1){
@@ -49,8 +51,6 @@ function get_tshot(n_shot){
 function checkShots(){
   var shots = data.items.map(i => "\n"+ i.name + " tem " + i.shots.toString() + " " + get_tshot(i.shots))
   var message = "**VEJA ABAIXO OS MELIANTES!**\n" + "```" + shots + "```"
-  //console.log(shots)
-  //console.log(message)
   return message
 }
 
@@ -65,12 +65,36 @@ client.on("message", message => {
   const command = args.shift().toLowerCase(); // "shot"
   const member = message.mentions.members.first();
 
-  if(command === "shot" && member){
-    message.channel.send("Parado " + member.user.username + "!")
-    console.log(member)
 
-    countShots(member.user.username); //else criar arquivo
+  //call poliça
+  if(command === "ow" && member){
+    if(member.user.username == "poliça") message.channel.send("ALERTA! Favor usar outro canal")
   }
+  //!ajuda
+  if(command === "ajuda"){
+    const help = `LISTA DE COMANDOS DO BOT:
+                  !shot @<user>: adiciona 1 shot pro usuário
+                  !shot-rm @<user>: remove 1 shot do usuário (admin only)
+                  !shots: exibe a lista de shots por usuário
+                  !ow @poliça: eu dou um alerta!
+                  !ajuda: exibe a lista de comandos do bot (mas essa você já sabe)
+                  `
+    message.channel.send("```" + help +"```")
+  }
+  //!shot @name
+  if(command === "shot" && member){
+    message.channel.send("Parado " + member.user.username + "! +1 shot!")
+
+    countShots(member.user.username, command);
+  }
+  //!shot-rm @name
+  if(command === "shot-rm" && member){
+    if (message.member.hasPermission('ADMINISTRATOR')){
+      message.channel.send("Parabéns, " + member.user.username + "! -1 shot!")
+      countShots(member.user.username, command);
+    } else message.channel.send("Somente o admin do server pode remover shots!")
+  }
+  //!shots
   if(command === "shots") {
     var text = checkShots()
     console.log(text)
