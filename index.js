@@ -49,6 +49,8 @@ function get_tshot(n_shot){
 function checkShots(){
   var shots = data.items.map(i => "\n"+ i.name + " tem " + i.shots.toString() + " " + get_tshot(i.shots))
   var message = "**VEJA ABAIXO OS MELIANTES!**\n" + "```" + shots + "```"
+  //console.log(shots)
+  //console.log(message)
   return message
 }
 
@@ -70,8 +72,9 @@ client.on("message", message => {
     countShots(member.user.username); //else criar arquivo
   }
   if(command === "shots") {
-    message = checkShots()
-    message.channel.send(message);
+    var text = checkShots()
+    console.log(text)
+    message.channel.send(text);
   }
 });
 
