@@ -50,7 +50,7 @@ function get_tshot(n_shot){
 
 function checkShots(){
   var shots = data.items.map(i => "\n"+ i.name + " tem " + i.shots.toString() + " " + get_tshot(i.shots))
-  var message = "**VEJA ABAIXO OS MELIANTES!**\n" + "```" + shots + "```"
+  var message = "**LISTA DE MELIANTES!**\n" + "```" + shots + "```"
   return message
 }
 
@@ -67,19 +67,20 @@ client.on("message", message => {
 
 
   //call poliça
-  if(command === "ow" && member){
-    if(member.user.username == "poliça") message.channel.send("ALERTA! Favor usar outro canal")
+  if(command === "epa"){
+    //if(member.user.username == "poliça")
+    message.channel.send("ALERTA! Favor usar outro canal")
   }
   //!ajuda
   if(command === "ajuda"){
-    const help = `LISTA DE COMANDOS DO BOT:
-                  !shot @<user>: adiciona 1 shot pro usuário
-                  !shot-rm @<user>: remove 1 shot do usuário (admin only)
-                  !shots: exibe a lista de shots por usuário
-                  !ow @poliça: eu dou um alerta!
-                  !ajuda: exibe a lista de comandos do bot (mas essa você já sabe)
+    const help = `**LISTA DE COMANDOS DO BOT:**
+**!shot @<user>:** adiciona 1 shot pro usuário
+**!shot-rm @<user>**: remove 1 shot do usuário (admin only)
+**!shots:** exibe a lista de shots por usuário
+**!epa:** eu dou um alerta!
+**!ajuda:** exibe a lista de comandos do bot (mas essa você já sabe)
                   `
-    message.channel.send("```" + help +"```")
+    message.channel.send(help)
   }
   //!shot @name
   if(command === "shot" && member){
