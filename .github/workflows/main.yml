@@ -27,12 +27,13 @@ jobs:
         image: docker:dind
     steps:
       - uses: actions/checkout@v2
-      - name: push to registry
+      - name: login
         env: # Ou como uma variável de ambiente
           DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
         run:
           echo $DOCKER_TOKEN | docker login -u kaykelins --password-stdin
-          docker push kaykelins/polica-bot:$GITHUB_SHA
+      - name: push
+        run: docker push kaykelins/polica-bot:$GITHUB_SHA
   deploy:
     runs-on: ubuntu-latest
     container: kaykelins/nomad:cli
