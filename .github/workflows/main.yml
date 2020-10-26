@@ -35,7 +35,6 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     container: kaykelins/nomad:cli
-    
     steps:
       - uses: actions/checkout@v2
       - name: deploy
@@ -44,6 +43,7 @@ jobs:
           NOMAD_TOKEN: ${{ secrets.NOMAD_TOKEN }}
           NOMAD_ADDR: ${{ secrets.NOMAD_ADDR }}
         run: |
+          echo $NOMAD_ADDR
           sed -i 's|<POLICA_BOT_TOKEN>|'$POLICA_BOT_TOKEN'|g' job/bot.nomad
           sed -i 's|<GIT_COMMIT>|'$GITHUB_SHA'|g' job/bot.nomad
           nomad job run job/bot.nomad
