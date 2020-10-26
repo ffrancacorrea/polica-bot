@@ -66,7 +66,7 @@ resource "aws_lightsail_static_ip_attachment" "main" {
 
 resource "local_file" "key" {
   sensitive_content = tls_private_key.main.private_key_pem
-  filename          = "${path.module}/key.pem"
+  filename          = "../ansible/key.pem"
   file_permission   = "0600"
 }
 
