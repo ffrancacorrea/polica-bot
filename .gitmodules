@@ -1,6 +1,3 @@
 [submodule "ansible/nomad"]
 	path = infra/ansible/nomad
 	url = git@github.com:kaykelins/nomad-role.git
-[submodule "ansible/docker"]
-	path = infra/ansible/docker
-	url = git@github.com:kaykelins/docker-role.git
