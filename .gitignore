@@ -8,6 +8,7 @@
 ### Terraform ###
 # Local .terraform directories
 **/.terraform/*
+**/secrets
 secret.json
 # .tfstate files
 *.tfstate
