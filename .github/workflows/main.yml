@@ -19,14 +19,6 @@ jobs:
           docker version
       - name: buid
         run: docker build -f dev.Dockerfile -t kaykelins/polica-bot:$GITHUB_SHA .
-  push:
-    runs-on: ubuntu-latest
-    container: docker:latest
-    services:
-      docker-dind:
-        image: docker:dind
-    steps:
-      - uses: actions/checkout@v2
       - name: login
         env: # Ou como uma variável de ambiente
           DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
