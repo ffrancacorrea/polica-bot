@@ -1,4 +1,4 @@
-job "bott" {
+job "bot" {
   datacenters = ["dc1"]
 
   group "polica" {
