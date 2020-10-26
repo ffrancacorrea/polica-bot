@@ -28,8 +28,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: push to registry
-        with: # Configura o segredo como uma entrada
-          DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
         env: # Ou como uma variável de ambiente
           DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
         run: make push
@@ -40,10 +38,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: deploy
-        with: 
-          POLICA_BOT_TOKEN: ${{ secrets.POLICA_BOT_TOKEN }}
-          NOMAD_TOKEN: ${{ secrets.NOMAD_TOKEN }}
-          NOMAD_ADDR: ${{ secrets.NOMAD_ADDR }}
         env: 
           POLICA_BOT_TOKEN: ${{ secrets.POLICA_BOT_TOKEN }}
           NOMAD_TOKEN: ${{ secrets.NOMAD_TOKEN }}
