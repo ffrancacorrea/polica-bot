@@ -17,7 +17,7 @@ jobs:
         run: |
           echo polica!
           docker version
-      - shell: bash
+      - name: buid
         run: docker build -f dev.Dockerfile -t kaykelins/polica-bot:$GITHUB_SHA .
   push:
     runs-on: ubuntu-latest
