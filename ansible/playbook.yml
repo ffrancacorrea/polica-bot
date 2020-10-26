@@ -1,0 +1,15 @@
+- name: Docker
+  hosts: all
+  roles:
+    - docker
+
+- name: Nomad
+  hosts: all
+  roles: 
+    - nomad
+  vars:
+    network_interface: "eth0"
+    bootstrap_expect: 1
+    worker: true
+  tags:
+    - nomad

@@ -17,15 +17,35 @@ jobs:
         run: |
           echo polica!
           docker version
-      - name: download waypoint
-        run: wget -q -O /tmp/waypoint.zip https://releases.hashicorp.com/waypoint/0.1.3/waypoint_0.1.3_linux_amd64.zip
-      - name: install waypoint
-        run: unzip -d /usr/local/bin /tmp/waypoint.zip
-      - name: waypoint bootstrap  
-        run: |
-          docker pull hashicorp/waypoint:latest
-          waypoint install --platform=docker -accept-tos
-      - name: waypoint initialize
-        run: waypoint init
-      - name: waypoint build
-        run: waypoint build
+      - name: buid
+        run: make build
+  push:
+    runs-on: ubuntu-latest
+    container: docker:latest
+    services:
+      docker-dind:
+        image: docker:dind
+    steps:
+      - uses: actions/checkout@v2
+      - name: push to registry
+        with: # Configura o segredo como uma entrada
+          DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
+        env: # Ou como uma variável de ambiente
+          DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
+        run: make push
+  deploy:
+    runs-on: ubuntu-latest
+    container: kaykelins/nomad:cli
+    
+    steps:
+      - uses: actions/checkout@v2
+      - name: deploy
+        with: 
+          POLICA_BOT_TOKEN: ${{ secrets.POLICA_BOT_TOKEN }}
+          NOMAD_TOKEN: ${{ secrets.NOMAD_TOKEN }}
+          NOMAD_ADDR: ${{ secrets.NOMAD_ADDR }}
+        env: 
+          POLICA_BOT_TOKEN: ${{ secrets.POLICA_BOT_TOKEN }}
+          NOMAD_TOKEN: ${{ secrets.NOMAD_TOKEN }}
+          NOMAD_ADDR: ${{ secrets.NOMAD_ADDR }}
+        run: make deploy
