@@ -1,9 +1,9 @@
 name: CI
 on:
   push:
-    branches: [ develop ]
+    branches: [ devops ]
   pull_request:
-    branches: [ develop ]
+    branches: [ devops ]
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -19,3 +19,13 @@ jobs:
           rm -rf /tmp/waypoint*
       - run:
           waypoint init
+      - run:
+          waypoint build
+      - uses: actions/upload-artifact@v2
+        with:
+          name: waypoint_data
+          path: data.db
+      - uses: actions/upload-artifact@v2
+        with:
+          name: waypoint_folder
+          path: .waypoint
