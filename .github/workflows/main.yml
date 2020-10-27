@@ -13,11 +13,5 @@ jobs:
         image: docker:dind
     steps:
       - uses: actions/checkout@v2
-      - name: Run Sanity check
-        run: |
-          echo polica!
-          docker version
-     - uses: hashicorp/action-setup-waypoint
-     - run: waypoint init
-     - name: buid
-        run: docker build -f dev.Dockerfile -t kaykelins/polica-bot:$GITHUB_SHA .
+      - uses: hashicorp/action-setup-waypoint
+      - run: waypoint init
