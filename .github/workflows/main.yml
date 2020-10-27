@@ -18,9 +18,9 @@ jobs:
           unzip -d /usr/local/bin /tmp/waypoint.zip
           rm -rf /tmp/waypoint*
       - run:
+          echo $SECRET_JSON > secret.json
           waypoint init
       - run:
-          echo $SECRET_JSON > secret.json
           waypoint build
       - uses: actions/upload-artifact@v2
         with:
