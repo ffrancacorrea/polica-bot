@@ -7,9 +7,15 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    container: docker:latest
+    services:
+      docker-dind:
+        image: docker:dind
     steps:
       - uses: actions/checkout@v2
-      - uses: hashicorp/action-setup-waypoint
-        with:
-          version: '0.1.0'
-      - run: waypoint init
+      - run: |
+          wget -q -O /tmp/waypoint.zip https://releases.hashicorp.com/waypoint/${WAYPOINT_VERSION}/waypoint_${WAYPOINT_VERSION}_linux_amd64.zip
+          sudo unzip -d /usr/local/bin /tmp/waypoint.zip
+          rm -rf /tmp/waypoint*
+      - run:
+          waypoint init
