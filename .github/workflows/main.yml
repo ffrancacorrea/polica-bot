@@ -31,6 +31,7 @@ jobs:
           path: data.db
 
   deploy:
+    needs: build
     runs-on: ubuntu-latest
     container: docker:latest
     services:
