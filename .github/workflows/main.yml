@@ -29,10 +29,7 @@ jobs:
         with:
           name: waypoint_data
           path: data.db
-      - uses: actions/upload-artifact@v2
-        with:
-          name: waypoint_folder
-          path: .waypoint
+
   deploy:
     runs-on: ubuntu-latest
     container: docker:latest
