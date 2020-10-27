@@ -11,8 +11,11 @@ app "bot-polica" {
     }
     registry {
       use "docker" {
-        image = "kaykelins/polica-bot"
-        tag = "test"
+
+        image = "polica-bot"
+        tag = "alpine"
+        local = true
+
       }
     } 
   }
