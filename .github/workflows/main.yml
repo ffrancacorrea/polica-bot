@@ -20,6 +20,8 @@ jobs:
       - run:
           echo $SECRET_JSON > secret.json
           waypoint init
+        env: 
+          SECRET_JSON: ${{ secrets.SECRET_JSON }}
       - run:
           waypoint build
       - uses: actions/upload-artifact@v2
@@ -47,7 +49,9 @@ jobs:
         with:
           name: waypoint_data
       - run:
-          waypoint init
-      - run:
           echo $SECRET_JSON > secret.json
+          waypoint init
+        env: 
+          SECRET_JSON: ${{ secrets.SECRET_JSON }}
+      - run:
           waypoint deploy
