@@ -11,9 +11,11 @@ app "bot-polica" {
     }
     registry {
       use "docker" {
-        image = "kaykelins/polica-bot"
-        tag = "1"
-        encoded_auth = filebase64("./secret.json")
+
+        image = "polica-bot"
+        tag = "alpine"
+        local = true
+
       }
     }
   }
