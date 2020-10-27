@@ -11,16 +11,22 @@ app "bot-polica" {
     }
     registry {
       use "docker" {
-
-        image = "polica-bot"
-        tag = "alpine"
-        local = true
-
+        image = "kaykelins/polica-bot"
+        tag = "waypoint"
+        encoded_auth = filebase64("secret.json")
       }
     } 
   }
 
   deploy { 
-    use "docker" {}
+    use "nomad" {
+      datacenter = "dc1"
+      region = "global"
+      static_environment = {
+        "environment": "dev",
+        "LOG_LEVEL": "debug"
+      }
+      replicas = 1
+    }
   }
 }
