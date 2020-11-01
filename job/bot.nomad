@@ -14,7 +14,7 @@ job "bott" {
       driver = "docker"
       volume_mount {
         volume      = "shots"
-        destination = "/bot/data.json"
+        destination = "/bot/data/"
       }
       config {
         image = "kaykelins/polica-bot:<GIT_COMMIT>"
