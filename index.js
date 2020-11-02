@@ -2,6 +2,7 @@
 const Discord = require("discord.js");
 const client = new Discord.Client();
 const fs = require('fs');
+
 const token = process.env.POLICA_BOT_TOKEN;
 const prefix = "!";
 
@@ -18,16 +19,19 @@ if(fs.existsSync('data.json')) {
 function add_member(member){
   obj = {"name":member, "shots":0}
   return obj;
+
 }
 
 function countShots(member, command){
   var item = data.items.filter(i => i.name == member);
   //adds member to json in case it does not exist
+
   if(item.length == 0){
     var new_member = add_member(member);
     data.items.push(new_member);
     item = data.items.filter(i => i.name == member);
   };
+
   var shots;
   if(command == "shot"){
     shots = item[0].shots++
@@ -65,7 +69,6 @@ client.on("message", message => {
   const command = args.shift().toLowerCase(); // "shot"
   const member = message.mentions.members.first();
 
-
   //call poliça
   if(command === "epa"){
     //if(member.user.username == "poliça")
@@ -85,7 +88,6 @@ client.on("message", message => {
   //!shot @name
   if(command === "shot" && member){
     message.channel.send("Parado " + member.user.username + "! +1 shot!")
-
     countShots(member.user.username, command);
   }
   //!shot-rm @name
