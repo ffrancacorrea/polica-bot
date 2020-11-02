@@ -5,13 +5,13 @@ const fs = require('fs');
 
 const token = process.env.POLICA_BOT_TOKEN;
 const prefix = "!";
-
+const data_file = './data/data.json'
 //check if file exists
-if(fs.existsSync('data.json')) {
-  var rawdata = fs.readFileSync('data.json');
+if(fs.existsSync(data_file)) {
+  var rawdata = fs.readFileSync(data_file);
   var data = JSON.parse(rawdata);
 } else {
-    fs.writeFile('data.json', JSON.stringify({items: []}), (err) => {
+    fs.writeFile(data_file, JSON.stringify({items: []}), (err) => {
         if (err) console.log(err);
     })
 }
