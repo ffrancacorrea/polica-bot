@@ -4,7 +4,7 @@ job "bott" {
   group "polica" {
     volume "shots" {
       type = "host"
-      read_only = true
+      read_only = false
       source = "shots"
     }
     task "nodejs" {
